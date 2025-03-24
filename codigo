@@ -1,0 +1,27 @@
+#include <WiFi.h>
+#include <PubSubClient.h>
+
+const char* ssid = "SEU_WIFI";
+const char* password = "SENHA_WIFI";
+const char* mqttServer = "BROKER_MQTT_IP";
+const int mqttPort = 1883;
+const char* mqttTopic = "mining/rig";
+
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+void setup() {
+    WiFi.begin(ssid, password);
+    while (WiFi.status() != WL_CONNECTED) { delay(1000); }
+    
+    client.setServer(mqttServer, mqttPort);
+    while (!client.connected()) { client.connect("ESP32Monitor"); }
+    
+    client.publish(mqttTopic, "ESP32 conectado ao MQTT!");
+}
+
+void loop() {
+    client.loop();
+    client.publish(mqttTopic, "⚡ Rig funcionando!");
+    delay(60000);
+}
