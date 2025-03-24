@@ -1,0 +1,9 @@
+if (!client.connected()) {
+    while (!client.connected()) {
+        if (client.connect("ESP32Monitor")) {
+            client.publish(mqttTopic, "Reconnected to MQTT!");
+        } else {
+            delay(5000);  // Aguarda 5 segundos antes de tentar novamente
+        }
+    }
+}
