@@ -1,0 +1,6 @@
+if (WiFi.status() != WL_CONNECTED) {
+    client.publish(mqttTopic, "⚠️ Problema na conexão Wi-Fi!");
+    delay(5000);
+} else {
+    client.publish(mqttTopic, "🔋 Wi-Fi OK");
+}
